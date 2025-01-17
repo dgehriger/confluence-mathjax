@@ -1,0 +1,74 @@
+name: Build MathJax Project with Atlassian SDK
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Java 17
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # Install required system dependencies
+      - name: Install required packages
+        run: sudo apt-get update && sudo apt-get install -y curl tar
+
+      # Download and install Atlassian SDK
+      - name: Install Atlassian SDK
+        run: |
+          curl -L https://packages.atlassian.com/maven/org/atlassian/amps/atlassian-plugin-sdk/9.0.2/atlassian-plugin-sdk-9.0.2.tar.gz -o atlassian-plugin-sdk.tar.gz
+          sudo tar -xvzf atlassian-plugin-sdk.tar.gz -C /opt
+          sudo mv /opt/atlassian-plugin-sdk-9.0.2 /opt/atlassian-plugin-sdk
+          echo 'export PATH=$PATH:/opt/atlassian-plugin-sdk/bin' >> $GITHUB_ENV
+
+      # Verify SDK installation
+      - name: Verify Atlassian SDK installation
+        run: atlas-version
+
+      # Build MathJax Plugin
+      - name: Build MathJax Plugin
+        working-directory: ./mathjax
+        run: |
+          atlas-package
+
+      # Install Rust
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      # Add Rust target
+      - name: Add Rust target
+        run: rustup target add x86_64-unknown-linux-gnu
+
+      # Build MathJax Server
+      - name: Build MathJax Server
+        working-directory: ./mathjax-server
+        run: |
+          cargo build --release --target x86_64-unknown-linux-gnu
+
+      # Upload artifacts
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: |
+            mathjax/target
+            mathjax-server/target/x86_64-unknown-linux-gnu/release/
