@@ -1,0 +1,14 @@
+[package]
+name = "mathjax-server"
+version = "1.0.0"
+edition = "2021"
+authors = ["Daniel Gehriger <dgehriger@globusmedical.com>"]
+license = "MIT"
+
+
+[dependencies]
+rocket = "0.5.1"
+tokio = { version = "1", features = ["full"] }
+mathjax = { features = ["auto"], git = "https://github.com/Nigecat/mathjax-rs.git", branch = "master" }
+image = "0.24"
+lazy_static = "1.5.0"
