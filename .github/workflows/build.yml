@@ -31,9 +31,9 @@ jobs:
       # Download and install Atlassian SDK
       - name: Install Atlassian SDK
         run: |
-          curl -L https://packages.atlassian.com/maven/org/atlassian/amps/atlassian-plugin-sdk/9.0.2/atlassian-plugin-sdk-9.0.2.tar.gz -o atlassian-plugin-sdk.tar.gz
+          curl -L https://marketplace.atlassian.com/download/plugins/atlassian-plugin-sdk-tgz -o atlassian-plugin-sdk.tar.gz
           sudo tar -xvzf atlassian-plugin-sdk.tar.gz -C /opt
-          sudo mv /opt/atlassian-plugin-sdk-9.0.2 /opt/atlassian-plugin-sdk
+          sudo mv /opt/atlassian-plugin-* /opt/atlassian-plugin-sdk
           echo 'export PATH=$PATH:/opt/atlassian-plugin-sdk/bin' >> $GITHUB_ENV
 
       # Verify SDK installation
