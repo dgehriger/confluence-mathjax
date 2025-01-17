@@ -83,9 +83,9 @@ jobs:
 
       # Upload artifacts
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: release-artifacts
+          name: conf-mathjax-plugin-${GITHUB_REF_NAME}.zip
           path: release/confluence-mathjax-plugin-*.zip
 
       # Create GitHub Release
@@ -94,7 +94,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: release/confluence-mathjax-plugin-${GITHUB_REF_NAME}.zip
+          files: |
+            $(echo release/confluence-mathjax-plugin-${{ github.ref_name }}.zip)
           name: Confluence MathJax Plugin ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
           prerelease: false
