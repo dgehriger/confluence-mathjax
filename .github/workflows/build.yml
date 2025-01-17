@@ -33,8 +33,8 @@ jobs:
         run: |
           curl -L https://marketplace.atlassian.com/download/plugins/atlassian-plugin-sdk-tgz -o atlassian-plugin-sdk.tar.gz
           sudo tar -xvzf atlassian-plugin-sdk.tar.gz -C /opt
-          sudo mv /opt/atlassian-plugin-* /opt/atlassian-plugin-sdk
-          echo 'export PATH=$PATH:/opt/atlassian-plugin-sdk/bin' >> $GITHUB_ENV
+          sdk_dir=$(find /opt -maxdepth 1 -type d -name "atlassian-plugin-sdk-*")
+          echo "$sdk_dir/bin" >> $GITHUB_PATH
 
       # Verify SDK installation
       - name: Verify Atlassian SDK installation
