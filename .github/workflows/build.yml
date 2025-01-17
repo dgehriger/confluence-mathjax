@@ -35,8 +35,10 @@ jobs:
           sudo tar -xvzf atlassian-plugin-sdk.tar.gz -C /opt
           sdk_dir=$(find /opt -maxdepth 1 -type d -name "atlassian-plugin-sdk-*")
           sudo mv $sdk_dir /opt/atlassian-plugin-sdk
-          sudo chmod -R +x "/opt/atlassian-plugin-sdk/bin"
+          sudo chmod -R +x /opt/atlassian-plugin-sdk/bin
+          sudo chmod -R +x /opt/atlassian-plugin-sdk/apache-maven-*/bin
           echo "/opt/atlassian-plugin-sdk/bin" >> $GITHUB_PATH
+          echo "/opt/atlassian-plugin-sdk/apache-maven-*/bin" >> $GITHUB_PATH
 
       # Verify SDK installation
       - name: Verify Atlassian SDK installation
