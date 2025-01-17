@@ -1,0 +1,56 @@
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}"/>
+        <param name="plugin-icon">images/globus-logo-16x16.png</param>
+        <param name="plugin-logo">images/globus-logo-128x128.png</param>
+        <param name="plugin-banner">images/globus-banner-57x179.png</param>
+        <param name="vendor-icon">images/globus-logo-16x16.png</param>
+        <param name="vendor-logo">images/globus-logo-64x64.png</param>
+        <param name="atlassian-data-center-compatible">true</param>
+        <param name="configure.url">/plugins/servlet/mathjax/admin/configuration</param>
+
+        <scan-modules>
+            <folder>META-INF/admin</folder>
+            <folder>META-INF/macros</folder>
+            <folder>META-INF/rest</folder>
+            <folder>META-INF/webparts</folder>
+        </scan-modules>
+    </plugin-info>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="mathjax" location="/com/globus/mathjax/i18n/mathjax"/>
+
+    <!-- add our web resources -->
+    <web-resource key="mathjax-resources" name="Mathjax Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        <dependency>confluence.editor.actions:editor-macro-browser</dependency>
+        <dependency>com.atlassian.soy.soy-template-plugin:soy-deps</dependency>
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        <dependency>com.atlassian.auiplugin:aui-tabs</dependency>
+        <dependency>com.atlassian.auiplugin:aui-dialog</dependency>
+        <dependency>com.atlassian.auiplugin:aui-dropdown2</dependency>
+        <dependency>com.atlassian.auiplugin:aui-inline-dialog</dependency>
+        <dependency>confluence.web.resources.:jquery</dependency>
+
+        <!-- transform Soy templates into JS -->
+        <transformation extension="soy">
+            <transformer key="soyTransformer">
+                <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+            </transformer>
+        </transformation>
+        <resource type="download" name="mathjax.css" location="/css/mathjax.css"/>
+        <resource type="download" name="mathjax.js" location="/js/mathjax.js"/>
+        <resource type="download" name="macro-help.js" location="/js/macro-help.js"/>
+        <resource type="download" name="activate-string-fields.js" location="/js/activate-string-fields.js"/>
+        <resource type="download" name="string-fields.js" location="soy/string-fields.soy"/>
+        <resource type="download" name="images/" location="/images"/>
+
+        <context>mathjax</context>
+        <context>atl.general</context>
+        <context>main</context>
+        <context>macro-browser</context>
+        <context>preview</context>
+    </web-resource>
+</atlassian-plugin>

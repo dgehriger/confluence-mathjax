@@ -1,0 +1,11 @@
+<!-- Render the dialog -->
+<section role="dialog" class="aui-layer aui-dialog2 aui-dialog2-medium" data-aui-modal="true" aria-hidden="true">
+
+    <!-- Dialog header -->
+    <header class="aui-dialog2-header">
+        <!-- The dialog's title -->
+        <h2 class="aui-dialog2-header-main">$title</h2>
+    </header>
+
+    <!-- Main dialog content -->
+    <div class="aui-dialog2-content">

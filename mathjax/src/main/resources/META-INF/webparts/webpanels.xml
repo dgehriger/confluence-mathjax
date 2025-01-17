@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module-container>
+
+    <web-panel key="include-mathjax-library" location="atl.header">
+        <context-provider class="com.globus.mathjax.admin.UrlContextProvider"/>
+        <resource name="view" type="velocity">
+            <![CDATA[
+               <script type="text/x-mathjax-config">
+                   MathJax.Hub.Config({
+                       tex2jax: {
+                          inlineMath: [ ['$inlineMathjaxStartIdentifier', '$inlineMathjaxEndIdentifier' ] ],
+                          displayMath: [ ['$blockMathjaxStartIdentifier', '$blockMathjaxEndIdentifier' ] ],
+                       },
+                       asciimath2jax: {
+                          delimiters: [ ['$mathjaxAsciiMathStartIdentifier','$mathjaxAsciiMathEndIdentifier'] ]
+                       }
+                   });
+               </script>
+               <script type="text/javascript"
+                       async
+                       src="$url">
+               </script>
+            ]]>
+        </resource>
+    </web-panel>
+
+</module-container>

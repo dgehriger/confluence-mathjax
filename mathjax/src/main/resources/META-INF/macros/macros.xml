@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module-container>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="macros" location="/com/globus/mathjax/i18n/macros"/>
+
+    <xhtml-macro name="mathjax-inline-macro" key="mathjax-inline-macro"
+                 class="com.globus.mathjax.macros.MathJaxInline"
+                 icon="/download/resources/com.globus.mathjax:mathjax-resources/images/globus-logo-64x64.png">
+        <category name="confluence-content"/>
+        <parameters>
+            <parameter name="equation" type="string" required="true">
+                <option key="showNameInPlaceholder" value="false"/>
+                <option key="showValueInPlaceholder" value="false"/>
+            </parameter>
+        </parameters>
+    </xhtml-macro>
+
+    <xhtml-macro name="mathjax-block-macro" key="mathjax-block-macro"
+                 class="com.globus.mathjax.macros.MathJaxBlock"
+                 icon="/download/resources/com.globus.mathjax:mathjax-resources/images/globus-logo-64x64.png">
+        <category name="confluence-content"/>
+        <parameters/>
+    </xhtml-macro>
+
+</module-container>

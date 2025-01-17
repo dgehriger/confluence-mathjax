@@ -1,0 +1,2 @@
+$webResourceManager.requireResource("com.globus.mathjax:mathjax-cdn-resources")
+        $bodyAsHtml

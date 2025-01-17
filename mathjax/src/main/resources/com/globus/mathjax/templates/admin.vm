@@ -1,0 +1,153 @@
+<html>
+<head>
+    <title>$i18n.getText("mathjax.admin.label")</title>
+    <meta name="decorator" content="atl.admin"/>
+    $webResourceManager.requireResource("com.globus.mathjax:mathjax-admin-resources")
+</head>
+<body>
+<div style="width: 80%;">
+    <p>
+        This plugin requires a url from which to fetch the code for the MathJax library. This page allows you
+        to select among several known CDN's and generate a URL from which to fetch MathJax. However, you
+        can also manually enter a valid url in the CDN URL field if you wish to use a CDN not shown in the
+        generator.
+    </p>
+    <br/>
+    <div style="text-align: center">
+        Currently active CDN url<br/>
+        <code><span id="url-info"><!--URL to show--></span></code>
+    </div>
+    <br/>
+    <form id="urlGen" class="aui">
+        <h2>URL Generator</h2>
+        <div class="field-group">
+            <label for="select-cdn">Select CDN</label>
+            <select class="select" id="select-cdn" name="select-cdn" required="required">
+                <option disabled="disabled">Select a CDN to use</option>
+                <option value="cloudflare">Cloudflare</option>
+                <option value="rawgit">Rawgit</option>
+                <option value="jsdelivr">jsDelivr</option>
+            </select>
+            <select class="select" id="select-version" name="select-version" required="required">
+                <option disabled="disabled">Select a Mathjax version to use</option>
+            </select>
+            <input type="submit" value="Generate URL" class="aui-button">
+            </input>
+        </div>
+    </form>
+    <hr/>
+    <h2>Configure Plugin</h2>
+    <form id="admin" class="aui">
+    <h3>MathJax Render Server</h3>
+    <p>In order to correctly render MathJax when exporting to PDF, the plugin contacts a render server
+        to convert the MathJax into an SVG image.</p>
+        <div class="field-group">
+            <label for="url">$i18n.getText("mathjax.admin.serverUrl.label")</label>
+            <input
+                    name="serverUrl"
+                    id="serverUrl"
+                    class="text long-field"
+                    type="url"
+                    placeholder="http://localhost:43603"
+                    required="required"
+            />
+        </div>
+    
+    <h3>Delimiters</h3>
+    <p>This plugin exposes access to MathJax either through its two macros, or by means of 
+        special start and end identifiers. <b>Only MathJax entered into the macros will render
+        correctly during PDF export.</b>
+    </p>
+    <p>
+    The mathjax javascript library will scan the body of the html file looking for a start
+    and end tag to identify a block of code it should parse.  The mathjax defaults for inline
+    code are <strong>\(</strong> and <strong>\)</strong>.  To create a block of mathjax rendered
+    code, the raw text should be wrapped with <strong>\[</strong> and <strong>\]</strong>.  Some
+    users have complained that they have &quot;stumbled&quot; upon this feature because some
+    code snippet or sql query contained the matching start and end strings.  To avoid that scenario,
+    this plugin has changed the default start and end identifies to <strong>(mathjax-inline(</strong>,
+    <strong>)mathjax-inline)</strong>, <strong>(mathjax-block(</strong> and <strong>)mathjax-block)</strong>.
+    This is more to type, but as the start and end strings are inserted by the inline and block mathjax
+    macros it is better to have something very distinct rather than easy to type.  If you would like to
+    specify a custom start and end delimiter, you can do so in the config below.</p>
+        <div class="field-group">
+            <label for="url">$i18n.getText("mathjax.admin.url.label")</label>
+            <input
+                    name="url"
+                    id="url"
+                    class="text long-field"
+                    type="url"
+                    placeholder="Enter a valid CDN URL"
+                    required="required"
+            />
+        </div>
+        <div class="field-group">
+            <label for="url">$i18n.getText("mathjax.admin.inlineMathjaxStartIdentifier.label")</label>
+            <input
+                    name="inlineMathjaxStartIdentifier"
+                    id="inlineMathjaxStartIdentifier"
+                    class="text long-field"
+                    type="string"
+                    placeholder="(mathjax-inline("
+            />
+        </div>
+        <div class="field-group">
+            <label for="url">$i18n.getText("mathjax.admin.inlineMathjaxEndIdentifier.label")</label>
+            <input
+                    name="inlineMathjaxEndIdentifier"
+                    id="inlineMathjaxEndIdentifier"
+                    class="text long-field"
+                    type="string"
+                    placeholder=")mathjax-inline)"
+            />
+        </div>
+        <div class="field-group">
+            <label for="url">$i18n.getText("mathjax.admin.blockMathjaxStartIdentifier.label")</label>
+            <input
+                    name="blockMathjaxStartIdentifier"
+                    id="blockMathjaxStartIdentifier"
+                    class="text long-field"
+                    type="string"
+                    placeholder="(mathjax-block("
+            />
+        </div>
+        <div class="field-group">
+            <label for="url">$i18n.getText("mathjax.admin.blockMathjaxEndIdentifier.label")</label>
+            <input
+                    name="blockMathjaxEndIdentifier"
+                    id="blockMathjaxEndIdentifier"
+                    class="text long-field"
+                    type="string"
+                    placeholder=")mathjax-block)"
+            />
+        </div>
+        <div class="field-group">
+            <label for="url">$i18n.getText("mathjax.admin.mathjaxAsciiMathStartIdentifier.label")</label>
+            <input
+                    name="mathjaxAsciiMathStartIdentifier"
+                    id="mathjaxAsciiMathStartIdentifier"
+                    class="text long-field"
+                    type="string"
+                    placeholder="(mathjax-ascii-math("
+            />
+        </div>
+        <div class="field-group">
+            <label for="url">$i18n.getText("mathjax.admin.mathjaxAsciiMathEndIdentifier.label")</label>
+            <input
+                    name="mathjaxAsciiMathEndIdentifier"
+                    id="mathjaxAsciiMathEndIdentifier"
+                    class="text long-field"
+                    type="string"
+                    placeholder=")mathjax-ascii-math)"
+            />
+        </div>
+        <div class="field-group">
+            <input type="submit" value="$i18n.getText('mathjax.admin.save.label')" class="aui-button">
+            </input>
+            <br/>
+            <span id="message"><!--Success or failure message--></span>
+        </div>
+    </form>
+</div>
+</body>
+</html>

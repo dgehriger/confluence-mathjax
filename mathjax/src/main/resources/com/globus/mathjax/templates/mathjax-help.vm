@@ -1,0 +1,26 @@
+<h3>Introduction</h3>
+
+<p>The MathJax Inline Equation and MathJax Block Equation macros use
+the <a href="https://www.mathjax.org/">MathJax Javascript Library</a>
+to create equations in a modern web browser. The library has
+a lots of power; however, only some is presently exposed and working.
+For example, the library can work with MathML and AsciiMath input;
+however, the only input format which has been worked on is the Tex
+input. Should the other input formats be desired, contact <a href="pdl-atlassian-plugin-development@globus.com">
+pdl-atlassian-plugin-development@globus.comm</a>
+<p>
+
+<h3>How it works</h3>
+<p>The MathJax library scans the html looking for &quot;tagged&quot;
+   sections. A tex equation to be displayed inline is &quot;tagged&quot;
+   by starting with <strong>\[</strong> and ending with <strong>\]</strong>.
+   A tex equation to be displayed centered on a new line should start
+   with <strong>\(</strong> and end with <strong>\)</strong>. The inline
+   and block MathJax macros simply wrap the equation with the appropriate
+   tags. Therefore, it's possible to insert an inline or block equation
+   without the macros just using the MathJax syntax. This is not advised
+   as the macro can be searched for allowing system admins to understand
+   the extent of the MathJax usage.</p>
+
+<h3>Parameters</h3>
+<p><strong>Equation</strong>: The equation in Tex format to display. (Inline Macro only)</p>

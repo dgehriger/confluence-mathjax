@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module-container>
+
+    <!--
+    <web-item key="conf-menu-item" name="MathJax Configuration" section="system.admin/configuration" weight="10">
+        <description>Link to MathJax admin page.</description>
+        <label key="mathjax.admin.label"/>
+        <link linkId="mathjax-admin-link">/plugins/servlet/mathjax/admin/configuration</link>
+    </web-item>
+    -->
+
+    <servlet key="admin-servlet" class="com.globus.mathjax.admin.AdminUI">
+        <url-pattern>/mathjax/admin/configuration</url-pattern>
+    </servlet>
+
+    <web-resource key="mathjax-admin-resources" name="Mathjax Admin Web Resources">
+        <resource type="download" name="admin.js" location="/js/admin.js"/>
+    </web-resource>
+
+</module-container>

@@ -1,0 +1,13 @@
+</div>
+
+        <!-- Dialog footer -->
+<footer class="aui-dialog2-footer">
+    <!-- Actions to render on the right of the footer -->
+    <div class="aui-dialog2-footer-actions">
+        <button id="dialog-submit-button" class="aui-button aui-button-primary"
+                onclick="macroHelpDocumentation.closeMacroHelp();">OK
+        </button>
+
+    </div>
+</footer>
+        </section>
