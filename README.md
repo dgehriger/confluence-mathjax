@@ -1,4 +1,4 @@
-# MathJax Plugin for COnfluence
+# MathJax Plugin for Confluence 9.2
 
 ## Pre-requisites
 
