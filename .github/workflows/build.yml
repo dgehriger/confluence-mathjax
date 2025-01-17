@@ -64,6 +64,9 @@ jobs:
 
       - name: Cache Rust build
         uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            mathjax-server
     
       # Build MathJax Server
       - name: Build MathJax Server
