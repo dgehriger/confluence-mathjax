@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.globus</groupId>
@@ -33,10 +33,18 @@
         </dependency>
 
         <dependency>
+            <groupId>com.atlassian.confluence.plugins</groupId>
+            <artifactId>confluence-create-content-plugin</artifactId>
+            <version>18.9.27</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-osgi-javaconfig</artifactId>
             <version>${osgi.javaconfig.version}</version>
         </dependency>
+
         <!-- OSGi Java Config dependencies -->
         <dependency>
             <groupId>org.apache.felix</groupId>
@@ -61,15 +69,8 @@
             <groupId>com.atlassian.plugin</groupId>
             <artifactId>atlassian-spring-scanner-annotation</artifactId>
             <version>${atlassian.spring.scanner.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.atlassian.plugin</groupId>
-            <artifactId>atlassian-spring-scanner-runtime</artifactId>
-            <version>${atlassian.spring.scanner.version}</version>
-            <scope>runtime</scope>
-        </dependency>        
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -96,42 +97,55 @@
             <artifactId>guava</artifactId>
             <version>33.0.0-jre</version>
             <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jsr305</artifactId>
+                    <groupId>com.google.code.findbugs</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
-            <scope>compile</scope>
-        </dependency>
-<!--
 
         <dependency>
-            <groupId>com.atlassian.plugins</groupId>
-            <artifactId>atlassian-plugins-webresource-common</artifactId>
-            <version>9.0.0-jakarta-m002</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.11.0</version>
             <scope>compile</scope>
-        </dependency> 
--->
-
-        <!-- WIRED TEST RUNNER DEPENDENCIES -->
-        <dependency>
-            <groupId>com.atlassian.plugins</groupId>
-            <artifactId>atlassian-plugins-osgi-testrunner</artifactId>
-            <version>${plugin.testrunner.version}</version>
-            <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>jsr311-api</artifactId>
             <version>1.1.1</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.2.2-atlassian-1</version>
-        </dependency>
+
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.atlassian.confluence</groupId>
+                <artifactId>confluence-plugins-platform-pom</artifactId>
+                <version>${confluence.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.platform.dependencies</groupId>
+                <artifactId>platform-public-api</artifactId>
+                <version>${platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.platform.dependencies</groupId>
+                <artifactId>platform-deprecated-public-api</artifactId>
+                <version>${platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
@@ -149,22 +163,13 @@
                     <jvmDebugPort>5005</jvmDebugPort>
                     <extractDependencies>false</extractDependencies>
                     <banningExcludes>
-                        <exclude>com.google.code.findbugs:jsr305</exclude>
+                        <exclude>org.apache.commons:commons-lang3</exclude>
                         <exclude>com.google.guava:guava</exclude>
-<!--
-                        <exclude>org.slf4j:slf4j-api</exclude>
-                        <exclude>com.atlassian.plugins:atlassian-plugins-core</exclude>
-                        <exclude>com.atlassian.annotations:atlassian-annotations</exclude>
-                        <exclude>commons-io:commons-io</exclude>
-                        <exclude>dom4j:dom4j</exclude>
-                        <exclude>com.atlassian.plugins:atlassian-plugins-webresource-common</exclude>
-                        <exclude>com.atlassian.plugins:atlassian-plugins-api</exclude>
-                        <exclude>com.atlassian.event:atlassian-event</exclude>
--->
                     </banningExcludes>
 
                     <!-- See here for an explanation of default instructions: -->
-                    <!-- https://developer.atlassian.com/docs/advanced-topics/configuration-of-instructions-in-atlassian-plugins -->
+                    <!--
+                    https://developer.atlassian.com/docs/advanced-topics/configuration-of-instructions-in-atlassian-plugins -->
                     <instructions>
                         <Atlassian-Plugin-Key>${atlassian.plugin.key}</Atlassian-Plugin-Key>
 
@@ -175,10 +180,7 @@
 
                         <!-- Add package import here -->
                         <Import-Package>
-                            org.springframework.osgi.*;resolution:="optional",
                             org.eclipse.gemini.blueprint.*;resolution:="optional",
-                            org.apache.commons.lang.*;resolution:="optional",                            
-                            org.apache.commons.validator.*;resolution:="optional",
                             !org.apache.avalon.framework.logger,
                             !org.apache.log.*,
                             !org.apache.logging.log4j.*,
@@ -197,12 +199,12 @@
                         <Embed-Transitive>true</Embed-Transitive>
                         <Bundle-ClassPath>.,{maven-dependencies}</Bundle-ClassPath>
                         <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
-                        <Embed-Directory>META-INF/lib</Embed-Directory>                        
+                        <Embed-Directory>META-INF/lib</Embed-Directory>
                     </instructions>
                 </configuration>
             </plugin>
 
-            <!-- <plugin>
+            <plugin>
                 <groupId>com.atlassian.plugin</groupId>
                 <artifactId>atlassian-spring-scanner-maven-plugin</artifactId>
                 <version>${atlassian.spring.scanner.version}</version>
@@ -214,16 +216,7 @@
                         <phase>process-classes</phase>
                     </execution>
                 </executions>
-                <configuration>
-                    <scannedDependencies>
-                        <dependency>
-                            <groupId>com.atlassian.plugin</groupId>
-                            <artifactId>atlassian-spring-scanner-external-jar</artifactId>
-                        </dependency>
-                    </scannedDependencies>
-                    <verbose>true</verbose>
-                </configuration>
-            </plugin> -->
+            </plugin>
 
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -237,19 +230,22 @@
     </build>
 
     <properties>
-        <confluence.version>6.14.0</confluence.version>
-        <confluence.data.version>6.14.0</confluence.data.version>
-        <amps.version>8.1.2</amps.version>
-        <plugin.testrunner.version>2.0.2</plugin.testrunner.version>
-        <atlassian.spring.scanner.version>1.2.13</atlassian.spring.scanner.version>
+        <confluence.version>9.0.0-m13</confluence.version>
+        <platform.version>7.0.0-m20</platform.version>
+
+        <confluence.data.version>${confluence.version}</confluence.data.version>
+        <amps.version>8.13.5</amps.version>
+
+        <atlassian.spring.scanner.version>2.2.6</atlassian.spring.scanner.version>
         <maven.resources.plugin.version>2.7</maven.resources.plugin.version>
         <osgi.javaconfig.version>0.2.0</osgi.javaconfig.version>
         <spring.version>4.2.5.RELEASE</spring.version>
-        <!-- This property ensures consistency between the key in atlassian-plugin.xml and the OSGi bundle's key. -->
+        <!-- This property ensures consistency between the key in atlassian-plugin.xml and the OSGi
+        bundle's key. -->
         <atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <encoding>UTF-8</encoding>
     </properties>
 

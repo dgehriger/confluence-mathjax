@@ -40,7 +40,7 @@ public class AdminUI extends HttpServlet {
     }
 
     private URI getUri(HttpServletRequest req) {
-        StringBuffer builder = req.getRequestURL();
+        StringBuilder builder = new StringBuilder(req.getRequestURL());
         if (req.getQueryString() != null) {
             builder.append("?");
             builder.append(req.getQueryString());
