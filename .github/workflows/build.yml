@@ -58,6 +58,9 @@ jobs:
       - name: Add Rust target
         run: rustup target add x86_64-unknown-linux-gnu
 
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+    
       # Build MathJax Server
       - name: Build MathJax Server
         working-directory: ./mathjax-server
@@ -68,7 +71,7 @@ jobs:
         run: |
           mkdir -p release
           cp mathjax/target/*.jar release/
-          cp mathjax-server/target/x86_64-unknown-linux-gnu/release/mathjax-server.exe release/
+          cp mathjax-server/target/release/mathjax-server.exe release/
           zip -j "release/confluence-mathjax-plugin-${GITHUB_REF_NAME}.zip" release/*
 
       # Upload artifacts
