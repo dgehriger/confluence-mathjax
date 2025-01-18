@@ -79,13 +79,13 @@ jobs:
           mkdir -p release
           cp mathjax/target/*.jar release/
           cp mathjax-server/target/x86_64-unknown-linux-gnu/release/mathjax-server release/
-          zip -j "release/confluence-mathjax-plugin-${GITHUB_REF_NAME}.zip" release/*
+          zip -j "release/confluence-mathjax-plugin-${{ github.ref_name }}.zip" release/*
 
       # Upload artifacts
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: conf-mathjax-plugin-${GITHUB_REF_NAME}.zip
+          name: conf-mathjax-plugin.zip
           path: release/confluence-mathjax-plugin-*.zip
 
       # Create GitHub Release
