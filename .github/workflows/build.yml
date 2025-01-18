@@ -94,8 +94,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: |
-            $(echo release/confluence-mathjax-plugin-${{ github.ref_name }}.zip)
+          files: release/confluence-mathjax-plugin-*.zip
           name: Confluence MathJax Plugin ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
           prerelease: false
