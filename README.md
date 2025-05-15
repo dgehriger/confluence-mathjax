@@ -10,11 +10,15 @@ Using Chocolatey:
 choco install maven
 ```
 
-### Java 17
+### Java 20
 
 ```powershell
-choco install adoptopenjdk17
+choco install openjdk --version=20.0.0
 ```
+
+### Atlassian SDK
+
+See instructions at [Atlassian SDK](https://developer.atlassian.com/server/framework/atlassian-sdk/install-the-atlassian-sdk-on-a-windows-system/).
 
 ## Building
 
@@ -22,8 +26,9 @@ choco install adoptopenjdk17
 
 ```powershell
 cd mathjax
-$env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-17.0.8.7-hotspot\"
+$env:JAVA_HOME = "$env:PROGRAMFILES\OpenJDK\jdk-20.0.1\"
 $env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
+javac -version
 atlas-package.bat
 ```
 
